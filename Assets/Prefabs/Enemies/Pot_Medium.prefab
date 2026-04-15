@@ -68,21 +68,57 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pot_Medium
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 60a58b7bcfcd5cf40b53612ad592816d, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a58b7bcfcd5cf40b53612ad592816d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1592609994916025073}
+      addedObject: {fileID: 8497018685378197617}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a58b7bcfcd5cf40b53612ad592816d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1699677153272673410}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a58b7bcfcd5cf40b53612ad592816d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5154669164923477617}
   m_SourcePrefab: {fileID: 100100000, guid: 60a58b7bcfcd5cf40b53612ad592816d, type: 3}
 --- !u!1 &7905413054797195095 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 60a58b7bcfcd5cf40b53612ad592816d, type: 3}
   m_PrefabInstance: {fileID: 7022451677099792902}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1592609994916025073
-MeshCollider:
+--- !u!114 &8497018685378197617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7905413054797195095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075954e3bd482eb42ae6eaa35734b8fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  BehaviorThrow: 1
+  BehaviorSpawn: 0
+  Health: 3
+  ThrowDamage: 20
+  ThrowRange: 10
+  ThrowForce: 30
+  ThrowCooldown: 3
+  SpawnSleep: 1
+  SpawnRange: 20
+  SpawnCooldown: 3
+  SpawnForce: {x: 0, y: 10, z: 0}
+  SpawnLocation: {fileID: 0}
+  SpawnObject: {fileID: 0}
+  BreakObject: {fileID: 0}
+--- !u!65 &1699677153272673410
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -99,7 +135,33 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0040320545, y: 0.004032055, z: 0.0034056648}
+  m_Center: {x: -2.3283064e-10, y: 0, z: 0.0017118293}
+--- !u!54 &5154669164923477617
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7905413054797195095}
   serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3032101251780910707, guid: 60a58b7bcfcd5cf40b53612ad592816d, type: 3}
+  m_Mass: 3
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

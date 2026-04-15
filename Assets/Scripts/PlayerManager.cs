@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerManager : MonoBehaviour
 {
-    public static PlayerManager instance;
+    public static PlayerManager Instance;
 
     public int MaxHealth = 100;
 
@@ -85,7 +85,7 @@ public class PlayerManager : MonoBehaviour
     {
         // Use a static instance for convenient access
         // because we only need one player.
-        instance = this;
+        Instance = this;
 
         ShowWeapon();
     }
@@ -95,6 +95,21 @@ public class PlayerManager : MonoBehaviour
     {
         HandleAttack();
         SelectWeapon();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        CurrentHealth -= damage;
+        if(CurrentHealth <= 0 )
+        {
+            CurrentHealth = 0;
+            GameOver();
+        }
+    }
+
+    void GameOver()
+    {
+        // TODO
     }
 
     void SelectWeapon()
