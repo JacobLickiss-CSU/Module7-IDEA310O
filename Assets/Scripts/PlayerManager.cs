@@ -91,6 +91,12 @@ public class PlayerManager : MonoBehaviour
         // because we only need one player.
         Instance = this;
 
+        // Lock the cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        // Load the state
+        DataManager.Instance.LoadState();
         ShowWeapon();
     }
 
@@ -113,7 +119,9 @@ public class PlayerManager : MonoBehaviour
 
     void GameOver()
     {
-        // TODO
+        CurrentState = PlayerState.Dead;
+        // TODO game over screen?
+        DataManager.Instance.LoadState(true);
     }
 
     void SelectWeapon()
@@ -180,7 +188,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    void ShowWeapon()
+    public void ShowWeapon()
     {
         if(TrowelDisplay != null)
         {
@@ -523,6 +531,13 @@ public class PlayerManager : MonoBehaviour
         }
         CurrentState = PlayerState.Ready;
         PerformReload(Weapon.Rocks);
+    }
+
+    public void DisplayRocks()
+    {
+        RocksDisplay.transform.GetChild(0).gameObject.SetActive(RocksLoaded >= 1);
+        RocksDisplay.transform.GetChild(1).gameObject.SetActive(RocksLoaded >= 2);
+        RocksDisplay.transform.GetChild(2).gameObject.SetActive(RocksLoaded >= 3);
     }
 
     void PerformReload(Weapon weapon)
