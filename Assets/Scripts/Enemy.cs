@@ -30,6 +30,8 @@ public class Enemy : MonoBehaviour
 
     public GameObject BreakObject = null;
 
+    public float BreakForce = 2f;
+
     // TODO break sound
 
     private float ThrowingCooldown = 0f;
@@ -132,7 +134,25 @@ public class Enemy : MonoBehaviour
             GameObject broken = Instantiate(BreakObject);
             broken.transform.position = transform.position;
             broken.transform.rotation = transform.rotation;
+            if(GetComponent<Rigidbody>() != null)
+            {
+                TransferForce(broken);
+            }
         }
         Destroy(this.gameObject);
+    }
+
+    private void TransferForce(GameObject shatter)
+    {
+        Vector3 force = GetComponent<Rigidbody>().linearVelocity;
+        foreach(Transform sherd in shatter.transform)
+        {
+            Vector3 variation = new Vector3(
+                Random.Range(-BreakForce * force.magnitude, BreakForce * force.magnitude),
+                Random.Range(-BreakForce * force.magnitude, BreakForce * force.magnitude),
+                Random.Range(-BreakForce * force.magnitude, BreakForce * force.magnitude)
+            );
+            sherd.gameObject.GetComponent<Rigidbody>().AddForce(force + variation, ForceMode.Impulse);
+        }
     }
 }

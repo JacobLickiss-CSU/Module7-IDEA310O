@@ -110,9 +110,13 @@ MonoBehaviour:
   ThrowRange: 8
   ThrowForce: 20
   ThrowCooldown: 3
+  SpawnSleep: 1
+  SpawnRange: 20
+  SpawnCooldown: 3
+  SpawnForce: {x: 0, y: 10, z: 0}
   SpawnLocation: {fileID: 0}
   SpawnObject: {fileID: 0}
-  BreakObject: {fileID: 0}
+  BreakObject: {fileID: 6898707449223025835, guid: e0ebdd06c51ef404d830022a4b6960c5, type: 3}
 --- !u!54 &2076494514441135941
 Rigidbody:
   m_ObjectHideFlags: 0

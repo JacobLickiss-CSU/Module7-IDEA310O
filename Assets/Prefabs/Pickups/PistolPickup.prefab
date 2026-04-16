@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f900b9a65c6053b44a6a48d752302008, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1724195
+      value: 1.125
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f900b9a65c6053b44a6a48d752302008, type: 3}
       propertyPath: m_LocalPosition.z
@@ -51,6 +51,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f900b9a65c6053b44a6a48d752302008, type: 3}
       propertyPath: m_Name
       value: PistolPickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865873111228745626, guid: f900b9a65c6053b44a6a48d752302008, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8688820680789388962, guid: f900b9a65c6053b44a6a48d752302008, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

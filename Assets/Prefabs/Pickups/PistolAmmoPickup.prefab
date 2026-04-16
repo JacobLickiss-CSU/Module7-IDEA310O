@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5665494320340045238
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.2853138
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.446
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -18.97013
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      propertyPath: m_Name
+      value: PistolAmmoPickup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2158915809239392436}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1665867105391076092}
+  m_SourcePrefab: {fileID: 100100000, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+--- !u!1 &4782410216233873639 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cd76c4e5523017041802e51c2b61fb78, type: 3}
+  m_PrefabInstance: {fileID: 5665494320340045238}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2158915809239392436
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4782410216233873639}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0017457567, y: 0.0016738409, z: 0.0020016367}
+  m_Center: {x: 0, y: 0.00019787867, z: 0.001001905}
+--- !u!114 &1665867105391076092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4782410216233873639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d03b304a3af5dfd40bd5234c9d979725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickup
+  Health: 0
+  RockAmmo: 0
+  PistolAmmo: 12
+  ShotgunAmmo: 0
+  UnlockPistol: 0
+  UnlockShotgun: 0

@@ -116,7 +116,8 @@ MonoBehaviour:
   SpawnForce: {x: 0, y: 10, z: 0}
   SpawnLocation: {fileID: 0}
   SpawnObject: {fileID: 0}
-  BreakObject: {fileID: 0}
+  BreakObject: {fileID: 6046810922275474809, guid: b6b0746124692ce45b11b01ec8d95587, type: 3}
+  BreakForce: 2
 --- !u!65 &1699677153272673410
 BoxCollider:
   m_ObjectHideFlags: 0

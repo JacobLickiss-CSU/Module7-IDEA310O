@@ -44,7 +44,7 @@ public class PlayerManager : MonoBehaviour
 
     public float ShotgunAttackTime = 1.0f;
 
-    public float MeleeAttackDelay = 0.15f;
+    public float MeleeAttackDelay = 0.05f;
 
     public float RocksAttackDelay = 0.2f;
 
@@ -65,6 +65,10 @@ public class PlayerManager : MonoBehaviour
     public int PistolDamage = 2;
 
     public int ShotgunDamage = 5;
+
+    public float PistolRange = 40f;
+
+    public float ShotgunRange = 20f;
 
     public GameObject MainCamera;
 
@@ -312,7 +316,8 @@ public class PlayerManager : MonoBehaviour
         animation.Play(animationName);
         yield return new WaitForSeconds(attackDelay);
         ExecuteAttack(weapon);
-        StartCoroutine(HoldState(PlayerState.Attacking, attackTime - attackDelay));
+        yield return StartCoroutine(HoldState(PlayerState.Attacking, attackTime - attackDelay));
+        EndAttack(weapon);
     }
 
     void ExecuteAttack(Weapon weapon)
@@ -322,6 +327,8 @@ public class PlayerManager : MonoBehaviour
         {
             case Weapon.Trowel:
                 {
+                    TrowelDisplay.GetComponent<MeleeWeapon>().Damage = MeleeDamage;
+                    TrowelDisplay.GetComponent<MeleeWeapon>().Activate();
                     break;
                 }
             case Weapon.Rocks:
@@ -333,6 +340,44 @@ public class PlayerManager : MonoBehaviour
                     RocksDisplay.transform.GetChild(RocksLoaded).gameObject.SetActive(false);
                     ThrownRock.GetComponent<Projectile>().ThrowProjectile(MainCamera.transform.forward + new Vector3(0, .05f, 0));
 
+                    break;
+                }
+            case Weapon.Pistol:
+                {
+                    RaycastAttack(MainCamera.transform.position, MainCamera.transform.forward, PistolDamage, PistolRange);
+                    break;
+                }
+            case Weapon.Shotgun:
+                {
+                    RaycastAttack(MainCamera.transform.position, MainCamera.transform.forward, ShotgunDamage, ShotgunRange);
+                    break;
+                }
+        }
+    }
+
+    void RaycastAttack(Vector3 position, Vector3 direction, int damage, float range)
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(position + direction, direction, out hit, range))
+        {
+            if(hit.collider.gameObject.tag == "Enemy")
+            {
+                hit.collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            }
+        }
+    }
+
+    void EndAttack(Weapon weapon)
+    {
+        switch (weapon)
+        {
+            case Weapon.Trowel:
+                {
+                    TrowelDisplay.GetComponent<MeleeWeapon>().Deactivate();
+                    break;
+                }
+            case Weapon.Rocks:
+                {
                     break;
                 }
             case Weapon.Pistol:
