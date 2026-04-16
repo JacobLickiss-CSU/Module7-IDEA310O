@@ -370,6 +370,7 @@ public class PlayerManager : MonoBehaviour
         {
             if(hit.collider.gameObject.tag == "Enemy")
             {
+                hit.collider.gameObject.GetComponent<Rigidbody>().AddForce(direction * damage * 5, ForceMode.Impulse);
                 hit.collider.gameObject.GetComponent<Enemy>().TakeDamage(damage);
             }
         }

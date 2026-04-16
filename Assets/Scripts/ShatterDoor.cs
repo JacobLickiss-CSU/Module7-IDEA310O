@@ -1,8 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public class ShatterDoor : MonoBehaviour
 {
+    public TextMeshPro Label = null;
+
     public List<GameObject> Protectors = new List<GameObject>();
 
     private bool Broken = false;
@@ -26,6 +29,7 @@ public class ShatterDoor : MonoBehaviour
                     break;
                 }
             }
+            UpdateLabel();
 
             if (Protectors.Count <= 0)
             {
@@ -42,5 +46,13 @@ public class ShatterDoor : MonoBehaviour
             sherd.gameObject.AddComponent(typeof(Rigidbody));
         }
         Broken = true;
+    }
+
+    void UpdateLabel()
+    {
+        if (Label != null)
+        {
+            Label.text = "x" + Protectors.Count;
+        }
     }
 }
