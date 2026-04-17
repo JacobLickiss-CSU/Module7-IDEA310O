@@ -14,6 +14,8 @@ public class Pickup : MonoBehaviour
 
     public bool UnlockShotgun;
 
+    public SoundPlayer SoundPickup;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,14 +49,18 @@ public class Pickup : MonoBehaviour
         if(UnlockPistol)
         {
             PlayerManager.Instance.HasPistol = true;
+            PlayerManager.Instance.PistolLoaded = PlayerManager.Instance.PistolCapacity;
+            PlayerManager.Instance.CurrentWeapon = Weapon.Pistol;
         }
         if (UnlockShotgun)
         {
             PlayerManager.Instance.HasShotgun = true;
+            PlayerManager.Instance.ShotgunLoaded = PlayerManager.Instance.ShotgunCapacity;
+            PlayerManager.Instance.CurrentWeapon = Weapon.Shotgun;
         }
 
-        // TODO create effect objects
-        
+        if (SoundPickup != null) Instantiate(SoundPickup.gameObject);
+
         Destroy(this.gameObject);
     }
 }

@@ -11,6 +11,8 @@ public class MenuManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        Time.timeScale = 1.0f;
+
         if (!CanContinue() && ContinueButton != null)
         {
             ContinueButton.SetActive(false);

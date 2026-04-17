@@ -1,6 +1,9 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -84,6 +87,42 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject ThrownRock;
 
+    public bool IsPaused = false;
+
+    public GameObject PauseMenu;
+
+    public PlayerInput PlayerInput;
+
+    public SoundPlayer SoundTrowelFire;
+
+    public SoundPlayer SoundTrowelReady;
+
+    public SoundPlayer SoundRocksFire;
+
+    public SoundPlayer SoundRocksReload;
+
+    public SoundPlayer SoundRocksReady;
+
+    public SoundPlayer SoundPistolFire;
+
+    public SoundPlayer SoundPistolReload;
+
+    public SoundPlayer SoundPistolReady;
+
+    public SoundPlayer SoundShotgunFire;
+
+    public SoundPlayer SoundShotgunReload;
+
+    public SoundPlayer SoundShotgunReady;
+
+    public AudioSource MusicPlayer = null;
+
+    public List<LevelMusic> LevelMusic = new List<LevelMusic>();
+
+    public float musicTimer = 0f;
+
+    public float MusicVolume = .5f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -98,6 +137,9 @@ public class PlayerManager : MonoBehaviour
         // Load the state
         DataManager.Instance.LoadState();
         ShowWeapon();
+
+        // Unpause, if we're paused
+        Continue();
     }
 
     // Update is called once per frame
@@ -105,6 +147,8 @@ public class PlayerManager : MonoBehaviour
     {
         HandleAttack();
         SelectWeapon();
+        CheckPause();
+        ProcessMusic();
     }
 
     public void TakeDamage(int damage)
@@ -124,9 +168,24 @@ public class PlayerManager : MonoBehaviour
         DataManager.Instance.LoadState(true);
     }
 
+    void CheckPause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(IsPaused)
+            {
+                Continue();
+            }
+            else
+            {
+                Pause();
+            }
+        }
+    }
+
     void SelectWeapon()
     {
-        if(CurrentState == PlayerState.Ready)
+        if(CurrentState == PlayerState.Ready && !IsPaused)
         {
             if(Input.mouseScrollDelta.y > 0)
             {
@@ -192,18 +251,34 @@ public class PlayerManager : MonoBehaviour
     {
         if(TrowelDisplay != null)
         {
+            if (CurrentWeapon == Weapon.Trowel && !TrowelDisplay.activeSelf)
+            {
+                if (SoundTrowelReady != null) Instantiate(SoundTrowelReady.gameObject);
+            }
             TrowelDisplay.SetActive(CurrentWeapon == Weapon.Trowel);
         }
         if (RocksDisplay != null)
         {
+            if (CurrentWeapon == Weapon.Rocks && !RocksDisplay.activeSelf)
+            {
+                if (SoundRocksReady != null) Instantiate(SoundRocksReady.gameObject);
+            }
             RocksDisplay.SetActive(CurrentWeapon == Weapon.Rocks);
         }
         if (PistolDisplay != null)
         {
+            if(CurrentWeapon == Weapon.Pistol && !PistolDisplay.activeSelf)
+            {
+                if (SoundPistolReady != null) Instantiate(SoundPistolReady.gameObject);
+            }
             PistolDisplay.SetActive(CurrentWeapon == Weapon.Pistol);
         }
         if (ShotgunDisplay != null)
         {
+            if (CurrentWeapon == Weapon.Shotgun && !ShotgunDisplay.activeSelf)
+            {
+                if (SoundShotgunReady != null) Instantiate(SoundShotgunReady.gameObject);
+            }
             ShotgunDisplay.SetActive(CurrentWeapon == Weapon.Shotgun);
         }
     }
@@ -217,7 +292,7 @@ public class PlayerManager : MonoBehaviour
 
     void HandleAttack()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && !IsPaused)
         {
             Attack();
         }
@@ -337,6 +412,7 @@ public class PlayerManager : MonoBehaviour
                 {
                     TrowelDisplay.GetComponent<MeleeWeapon>().Damage = MeleeDamage;
                     TrowelDisplay.GetComponent<MeleeWeapon>().Activate();
+                    if (SoundTrowelFire != null) Instantiate(SoundTrowelFire.gameObject);
                     break;
                 }
             case Weapon.Rocks:
@@ -347,17 +423,20 @@ public class PlayerManager : MonoBehaviour
                     ThrownRock.transform.rotation = projectileLocation.rotation;
                     RocksDisplay.transform.GetChild(RocksLoaded).gameObject.SetActive(false);
                     ThrownRock.GetComponent<Projectile>().ThrowProjectile(MainCamera.transform.forward + new Vector3(0, .05f, 0));
+                    if (SoundRocksFire != null) Instantiate(SoundRocksFire.gameObject);
 
                     break;
                 }
             case Weapon.Pistol:
                 {
                     RaycastAttack(MainCamera.transform.position, MainCamera.transform.forward, PistolDamage, PistolRange);
+                    if(SoundPistolFire != null) Instantiate(SoundPistolFire.gameObject);
                     break;
                 }
             case Weapon.Shotgun:
                 {
                     RaycastAttack(MainCamera.transform.position, MainCamera.transform.forward, ShotgunDamage, ShotgunRange);
+                    if (SoundShotgunFire != null) Instantiate(SoundShotgunFire.gameObject);
                     break;
                 }
         }
@@ -425,6 +504,7 @@ public class PlayerManager : MonoBehaviour
                     {
                         if(CanReload(Weapon.Pistol))
                         {
+                            if (SoundPistolReload != null) Instantiate(SoundPistolReload.gameObject);
                             Animation displayAnimation = PistolDisplay.GetComponent<Animation>();
                             StartCoroutine(StartReloading(PistolReloadTime, displayAnimation, GetReloadVariant(Weapon.Pistol), Weapon.Pistol));
                         }
@@ -434,6 +514,7 @@ public class PlayerManager : MonoBehaviour
                     {
                         if (CanReload(Weapon.Shotgun))
                         {
+                            if (SoundShotgunReload != null) Instantiate(SoundShotgunReload.gameObject);
                             Animation displayAnimation = ShotgunDisplay.GetComponent<Animation>();
                             StartCoroutine(StartReloading(ShotgunReloadTime, displayAnimation, GetReloadVariant(Weapon.Shotgun), Weapon.Shotgun));
                         }
@@ -514,18 +595,21 @@ public class PlayerManager : MonoBehaviour
         CurrentState = PlayerState.Reloading;
         if(RocksLoaded <= 0 && (RocksAmmo + RocksLoaded) >= 1)
         {
+            if (SoundRocksReload != null) Instantiate(SoundRocksReload.gameObject);
             RocksDisplay.transform.GetChild(0).gameObject.SetActive(true);
             animation.Play("RockReload1");
             yield return new WaitForSeconds(reloadTime / 3);
         }
         if (RocksLoaded <= 1 && (RocksAmmo + RocksLoaded) >= 2)
         {
+            if (SoundRocksReload != null) Instantiate(SoundRocksReload.gameObject);
             RocksDisplay.transform.GetChild(1).gameObject.SetActive(true);
             animation.Play("RockReload2");
             yield return new WaitForSeconds(reloadTime / 3);
         }
         if (RocksLoaded <= 2 && (RocksAmmo + RocksLoaded) >= 3)
         {
+            if (SoundRocksReload != null) Instantiate(SoundRocksReload.gameObject);
             RocksDisplay.transform.GetChild(2).gameObject.SetActive(true);
             animation.Play("RockReload3");
             yield return new WaitForSeconds(reloadTime / 3);
@@ -591,7 +675,139 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    
+    public void Pause()
+    {
+        // Release the cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        Time.timeScale = 0.0f;
+
+        if(PauseMenu != null)
+        {
+            PauseMenu.SetActive(true);
+        }
+
+        if(PlayerInput != null)
+        {
+            PlayerInput.actions.Disable();
+        }
+
+        if(MusicPlayer != null)
+        {
+            MusicPlayer.Pause();
+        }
+
+        IsPaused = true;
+    }
+
+    public void Continue()
+    {
+        // Lock the cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        Time.timeScale = 1.0f;
+
+        if(PauseMenu != null)
+        {
+            PauseMenu.SetActive(false);
+        }
+
+        if (PlayerInput != null)
+        {
+            PlayerInput.actions.Enable();
+        }
+
+        if (MusicPlayer != null && musicTimer >= 0 && MusicPlayer.clip != null)
+        {
+            MusicPlayer.Play();
+        }
+
+        IsPaused = false;
+    }
+
+    public void Menu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Restart()
+    {
+        DataManager.Instance.LoadState(true);
+    }
+
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
+    }
+
+    public void RenewMusic()
+    {
+        if(MusicPlayer != null)
+        {
+            if(!MusicPlayer.isPlaying)
+            {
+                if(MusicPlayer.clip == null)
+                {
+                    MusicPlayer.clip = GetMusic();
+                }
+                
+                if(MusicPlayer.clip != null)
+                {
+                    MusicPlayer.Play();
+                }
+            }
+
+            musicTimer = musicTimer > 0 ? 15f : 18f;
+            ProcessMusic();
+        }
+    }
+
+    public void ProcessMusic()
+    {
+        musicTimer -= Time.deltaTime;
+
+        if(MusicPlayer != null)
+        {
+            if (musicTimer > 15)
+            {
+                MusicPlayer.volume = ((3f - (musicTimer - 15)) / 3f) * MusicVolume;
+            }
+            else if (musicTimer < 3)
+            {
+                MusicPlayer.volume = (musicTimer / 3f) * MusicVolume;
+            }
+            else
+            {
+                MusicPlayer.volume = 1 * MusicVolume;
+            }
+
+            if (musicTimer <= 0)
+            {
+                musicTimer = 0;
+                MusicPlayer.volume = 0;
+            }
+        }
+    }
+
+    public AudioClip GetMusic()
+    {
+        string level = SceneManager.GetActiveScene().name;
+
+        foreach(LevelMusic levelMusic in LevelMusic)
+        {
+            if(levelMusic.level == level)
+            {
+                return levelMusic.music;
+            }
+        }
+
+        return null;
+    }
 }
 
 public enum Weapon
@@ -611,4 +827,11 @@ public enum PlayerState
     Dead,
     Victory,
     Frozen
+}
+
+[Serializable]
+public struct LevelMusic
+{
+    public string level;
+    public AudioClip music;
 }

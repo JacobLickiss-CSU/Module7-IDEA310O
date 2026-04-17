@@ -49,6 +49,16 @@ public class Enemy : MonoBehaviour
 
     private float SpawnTimer = 1f;
 
+    public SoundPlayer SoundDamage;
+
+    public SoundPlayer SoundShatter;
+
+    public SoundPlayer SoundAttack;
+
+    public SoundPlayer SoundBump;
+
+    private bool firstBump = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -66,6 +76,7 @@ public class Enemy : MonoBehaviour
             {
                 if (Vector3.Distance(PlayerManager.Instance.MainCamera.transform.position, transform.position) < ThrowRange || WasSpawned)
                 {
+                    if (SoundAttack != null) Instantiate(SoundAttack.gameObject);
                     ThrowingCooldown = ThrowCooldown;
                     GetComponent<Rigidbody>().AddForce(Vector3.Normalize(PlayerManager.Instance.MainCamera.transform.position - transform.position) * ThrowForce, ForceMode.Impulse);
                     WasSpawned = false; // It was still spawned of course, but we no longer need the special case
@@ -82,6 +93,7 @@ public class Enemy : MonoBehaviour
                 SpawnTimer -= Time.deltaTime;
                 if (SpawnTimer <= 0 && Vector3.Distance(PlayerManager.Instance.MainCamera.transform.position, transform.position) < SpawnRange)
                 {
+                    if (SoundAttack != null) Instantiate(SoundAttack.gameObject);
                     Spawn();
 
                     SpawnTimer = SpawnCooldown;
@@ -106,6 +118,12 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if(SoundDamage != null) Instantiate(SoundDamage.gameObject);
+        if(PlayerManager.Instance != null)
+        {
+            // Start/Perpetuate music
+            PlayerManager.Instance.RenewMusic();
+        }
         Health -= damage;
         if (Health <= 0)
         {
@@ -116,19 +134,27 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(IsThrowing)
+        if (IsThrowing && collision.gameObject.tag == "Player")
         {
-            if (collision.gameObject.tag == "Player")
-            {
-                PlayerManager.Instance.TakeDamage(ThrowDamage);
-                Break();
-            }
+            PlayerManager.Instance.TakeDamage(ThrowDamage);
+            Break();
         }
+        else
+        {
+            if (SoundBump != null && (!firstBump || SleepTimer <= 0)) Instantiate(SoundBump.gameObject);
+        }
+
+        firstBump = false;
     }
 
     private void Break()
     {
-        // TODO Play break sound
+        if (SoundShatter != null) Instantiate(SoundShatter.gameObject);
+        if (PlayerManager.Instance != null)
+        {
+            // Start/Perpetuate music
+            PlayerManager.Instance.RenewMusic();
+        }
         if (BreakObject != null)
         {
             GameObject broken = Instantiate(BreakObject);

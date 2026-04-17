@@ -123,3 +123,4 @@ MonoBehaviour:
   ShotgunAmmo: 4
   UnlockPistol: 0
   UnlockShotgun: 0
+  SoundPickup: {fileID: -1255729955645808043, guid: 06baa5ef5e77010439a30120a0c4ee09, type: 3}

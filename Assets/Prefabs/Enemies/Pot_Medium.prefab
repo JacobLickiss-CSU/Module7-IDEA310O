@@ -118,6 +118,10 @@ MonoBehaviour:
   SpawnObject: {fileID: 0}
   BreakObject: {fileID: 6046810922275474809, guid: b6b0746124692ce45b11b01ec8d95587, type: 3}
   BreakForce: 2
+  SoundDamage: {fileID: -1255729955645808043, guid: 682cd864d6652814693a1b1897243635, type: 3}
+  SoundShatter: {fileID: -1255729955645808043, guid: 7f6373bcff677454ba1d1c92c08c506f, type: 3}
+  SoundAttack: {fileID: -1255729955645808043, guid: 52bcb90d13bea00428ff98d94377ee3c, type: 3}
+  SoundBump: {fileID: -1255729955645808043, guid: ca4f80e4f769e3e43b1be96d832e302c, type: 3}
 --- !u!65 &1699677153272673410
 BoxCollider:
   m_ObjectHideFlags: 0

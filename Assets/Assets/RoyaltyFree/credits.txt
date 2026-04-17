@@ -2,3 +2,30 @@
 
 CM Font
 CQ Mono
+
+-- https://www.productioncrate.com/
+
+https://www.productioncrate.com/sounds-effects/soundscrate-shotgun-reload-02
+https://www.productioncrate.com/sounds-effects/soundscrate-Shotgun_Reload_06
+https://www.productioncrate.com/sounds-effects/SoundsCrate-Gun_Shot_18
+https://www.productioncrate.com/sounds-effects/SoundsCrate-Gun_Shot_19
+https://www.productioncrate.com/sounds-effects/SoundsCrate-Gun_Shot_20
+
+-- https://f8studios.itch.io/snakes-second-authentic-gun-sounds-pack
+
+-- https://freesound.org/
+
+https://freesound.org/people/gulfstreamav/sounds/842510/
+https://freesound.org/people/gulfstreamav/sounds/842511/
+https://freesound.org/people/sound.variant/sounds/807304/
+
+-- Kenney https://www.kenney.nl/
+
+drawKnife1-3 (RPG Audio)
+woosh1-8 (Foley Sounds)
+cardFan1-2 (Casino Audio)
+threeTone2 (Digital Audio)
+
+-- JBD Artist
+
+Once Madness Rules

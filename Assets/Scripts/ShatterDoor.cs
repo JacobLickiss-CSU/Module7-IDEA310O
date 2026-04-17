@@ -10,6 +10,8 @@ public class ShatterDoor : MonoBehaviour
 
     private bool Broken = false;
 
+    public SoundPlayer DoorFall;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -40,6 +42,7 @@ public class ShatterDoor : MonoBehaviour
 
     void Shatter()
     {
+        if (DoorFall != null) Instantiate(DoorFall.gameObject);
         Destroy(GetComponent<BoxCollider>());
         foreach (Transform sherd in transform)
         {

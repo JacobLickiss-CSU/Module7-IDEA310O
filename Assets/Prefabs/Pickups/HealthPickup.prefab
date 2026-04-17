@@ -98,6 +98,7 @@ MonoBehaviour:
   ShotgunAmmo: 0
   UnlockPistol: 0
   UnlockShotgun: 0
+  SoundPickup: {fileID: -1255729955645808043, guid: ef92ce011de2cc443a7930d8b1522ac2, type: 3}
 --- !u!65 &6197382662357058345
 BoxCollider:
   m_ObjectHideFlags: 0
