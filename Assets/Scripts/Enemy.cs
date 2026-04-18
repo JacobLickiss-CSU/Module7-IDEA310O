@@ -1,4 +1,7 @@
 using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
@@ -78,7 +81,7 @@ public class Enemy : MonoBehaviour
                 {
                     if (SoundAttack != null) Instantiate(SoundAttack.gameObject);
                     ThrowingCooldown = ThrowCooldown;
-                    GetComponent<Rigidbody>().AddForce(Vector3.Normalize(PlayerManager.Instance.MainCamera.transform.position - transform.position) * ThrowForce, ForceMode.Impulse);
+                    StartCoroutine(ThrowAtPlayer());
                     WasSpawned = false; // It was still spawned of course, but we no longer need the special case
                 }
             }
@@ -100,6 +103,13 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator ThrowAtPlayer()
+    {
+        GetComponent<Rigidbody>().AddForce(new Vector3(0, 3f * GetComponent<Rigidbody>().mass, 0), ForceMode.Impulse);
+        yield return new WaitForSeconds(0.3f);
+        GetComponent<Rigidbody>().AddForce(Vector3.Normalize(PlayerManager.Instance.MainCamera.transform.position - transform.position) * ThrowForce, ForceMode.Impulse);
     }
 
     public void Spawn()
@@ -174,9 +184,9 @@ public class Enemy : MonoBehaviour
         foreach(Transform sherd in shatter.transform)
         {
             Vector3 variation = new Vector3(
-                Random.Range(-BreakForce * force.magnitude, BreakForce * force.magnitude),
-                Random.Range(-BreakForce * force.magnitude, BreakForce * force.magnitude),
-                Random.Range(-BreakForce * force.magnitude, BreakForce * force.magnitude)
+                UnityEngine.Random.Range(-BreakForce * force.magnitude, BreakForce * force.magnitude),
+                UnityEngine.Random.Range(-BreakForce * force.magnitude, BreakForce * force.magnitude),
+                UnityEngine.Random.Range(-BreakForce * force.magnitude, BreakForce * force.magnitude)
             );
             sherd.gameObject.GetComponent<Rigidbody>().AddForce(force + variation, ForceMode.Impulse);
         }

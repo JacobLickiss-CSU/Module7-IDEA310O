@@ -12,6 +12,8 @@ public class ShatterDoor : MonoBehaviour
 
     public SoundPlayer DoorFall;
 
+    public bool FinalBossFinish = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -49,6 +51,11 @@ public class ShatterDoor : MonoBehaviour
             sherd.gameObject.AddComponent(typeof(Rigidbody));
         }
         Broken = true;
+
+        if(FinalBossFinish)
+        {
+            PlayerManager.Instance.FinishFinalBoss();
+        }
     }
 
     void UpdateLabel()

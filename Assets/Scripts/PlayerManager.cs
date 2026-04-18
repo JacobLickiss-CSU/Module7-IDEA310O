@@ -91,6 +91,8 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject PauseMenu;
 
+    public GameObject GameOverMenu;
+
     public PlayerInput PlayerInput;
 
     public SoundPlayer SoundTrowelFire;
@@ -118,6 +120,8 @@ public class PlayerManager : MonoBehaviour
     public AudioSource MusicPlayer = null;
 
     public List<LevelMusic> LevelMusic = new List<LevelMusic>();
+
+    public AudioClip FinalBossMusic = null;
 
     public float musicTimer = 0f;
 
@@ -164,8 +168,7 @@ public class PlayerManager : MonoBehaviour
     void GameOver()
     {
         CurrentState = PlayerState.Dead;
-        // TODO game over screen?
-        DataManager.Instance.LoadState(true);
+        GameOverScreen();
     }
 
     void CheckPause()
@@ -677,6 +680,8 @@ public class PlayerManager : MonoBehaviour
 
     public void Pause()
     {
+        if (CurrentState == PlayerState.Dead) return;
+
         // Release the cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -703,6 +708,8 @@ public class PlayerManager : MonoBehaviour
 
     public void Continue()
     {
+        if (CurrentState == PlayerState.Dead) return;
+
         // Lock the cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -727,6 +734,31 @@ public class PlayerManager : MonoBehaviour
         IsPaused = false;
     }
 
+    public void GameOverScreen()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        Time.timeScale = 0.0f;
+
+        if (GameOverMenu != null)
+        {
+            GameOverMenu.SetActive(true);
+        }
+
+        if (PlayerInput != null)
+        {
+            PlayerInput.actions.Disable();
+        }
+
+        if (MusicPlayer != null)
+        {
+            MusicPlayer.Pause();
+        }
+
+        IsPaused = true;
+    }
+
     public void Menu()
     {
         SceneManager.LoadScene("MainMenu");
@@ -747,49 +779,57 @@ public class PlayerManager : MonoBehaviour
 
     public void RenewMusic()
     {
+        if(CurrentState == PlayerState.Dead) return;
         if(MusicPlayer != null)
         {
-            if(!MusicPlayer.isPlaying)
+            if (MusicPlayer.clip != FinalBossMusic)
             {
-                if(MusicPlayer.clip == null)
+                if (!MusicPlayer.isPlaying)
                 {
-                    MusicPlayer.clip = GetMusic();
-                }
-                
-                if(MusicPlayer.clip != null)
-                {
-                    MusicPlayer.Play();
-                }
-            }
+                    if (MusicPlayer.clip == null)
+                    {
+                        MusicPlayer.clip = GetMusic();
+                    }
 
-            musicTimer = musicTimer > 0 ? 15f : 18f;
-            ProcessMusic();
+                    if (MusicPlayer.clip != null)
+                    {
+                        MusicPlayer.Play();
+                    }
+                }
+
+                musicTimer = musicTimer > 0 ? 15f : 18f;
+                ProcessMusic();
+            }
         }
     }
 
     public void ProcessMusic()
     {
-        musicTimer -= Time.deltaTime;
-
-        if(MusicPlayer != null)
+        if(CurrentState == PlayerState.Dead) return;
+        if(MusicPlayer != null && MusicPlayer.clip != FinalBossMusic)
         {
-            if (musicTimer > 15)
-            {
-                MusicPlayer.volume = ((3f - (musicTimer - 15)) / 3f) * MusicVolume;
-            }
-            else if (musicTimer < 3)
-            {
-                MusicPlayer.volume = (musicTimer / 3f) * MusicVolume;
-            }
-            else
-            {
-                MusicPlayer.volume = 1 * MusicVolume;
-            }
+            musicTimer -= Time.deltaTime;
 
-            if (musicTimer <= 0)
+            if (MusicPlayer != null)
             {
-                musicTimer = 0;
-                MusicPlayer.volume = 0;
+                if (musicTimer > 15)
+                {
+                    MusicPlayer.volume = ((3f - (musicTimer - 15)) / 3f) * MusicVolume;
+                }
+                else if (musicTimer < 3)
+                {
+                    MusicPlayer.volume = (musicTimer / 3f) * MusicVolume;
+                }
+                else
+                {
+                    MusicPlayer.volume = 1 * MusicVolume;
+                }
+
+                if (musicTimer <= 0)
+                {
+                    musicTimer = 0;
+                    MusicPlayer.volume = 0;
+                }
             }
         }
     }
@@ -807,6 +847,22 @@ public class PlayerManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void TriggerFinalBoss()
+    {
+        if (MusicPlayer.clip != FinalBossMusic)
+        {
+            MusicPlayer.Stop();
+            MusicPlayer.clip = FinalBossMusic;
+            MusicPlayer.volume = MusicVolume;
+            MusicPlayer.Play();
+        }
+    }
+
+    public void FinishFinalBoss()
+    {
+        MusicPlayer.Stop();
     }
 }
 
